@@ -1,5 +1,7 @@
 package com.triptogether.api.auth.controller;
 
+import com.triptogether.api.auth.dto.SignInRequest;
+import com.triptogether.api.auth.dto.SignInResponse;
 import com.triptogether.api.auth.dto.SignUpRequest;
 import com.triptogether.api.auth.dto.SignUpResponse;
 import com.triptogether.api.auth.service.AuthService;
@@ -23,4 +25,9 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/sign-in")
+    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest request) {
+        SignInResponse response = authService.signIn(request);
+        return ResponseEntity.ok(response);
+    }
 }
