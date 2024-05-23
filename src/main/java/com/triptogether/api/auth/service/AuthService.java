@@ -1,9 +1,6 @@
 package com.triptogether.api.auth.service;
 
-import com.triptogether.api.auth.dto.SignInRequest;
-import com.triptogether.api.auth.dto.SignInResponse;
-import com.triptogether.api.auth.dto.SignUpRequest;
-import com.triptogether.api.auth.dto.SignUpResponse;
+import com.triptogether.api.auth.dto.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +12,10 @@ public class AuthService {
 
     public SignInResponse signIn(SignInRequest request){
         return new SignInResponse();
+    }
+
+    public ChangePasswordResponse changePassword(ChangePasswordRequest request){
+        return new ChangePasswordResponse();
     }
 
 }
