@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: "Trip Together API Service"
+  datasource:
+    url: jdbc:postgresql://localhost:5432/trip_together
+    username: postgres
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
