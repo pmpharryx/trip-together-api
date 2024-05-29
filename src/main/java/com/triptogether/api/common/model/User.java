@@ -26,13 +26,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userId;
 
-    @Column(name = "username", length = 255, nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password", length = 255, nullable = false, unique = true)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "mobile_no", length = 15, nullable = false, unique = false)
+    @Column(name = "mobile_no", length = 15, nullable = false, unique = true)
     private String mobileNo;
 
     @Column(name = "created_by", nullable = false)
