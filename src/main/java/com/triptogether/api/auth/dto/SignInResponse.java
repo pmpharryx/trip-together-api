@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpResponse {
+public class SignInResponse {
 
-    private String statusCode;
-
-    private String statusMessage;
-
+    private String token;
+    private String username;
 }
