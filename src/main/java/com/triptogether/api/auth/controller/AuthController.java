@@ -1,7 +1,12 @@
 package com.triptogether.api.auth.controller;
 
-import com.triptogether.api.auth.dto.*;
+import com.triptogether.api.auth.dto.ChangePasswordRequest;
+import com.triptogether.api.auth.dto.SignInRequest;
+import com.triptogether.api.auth.dto.SignInResponse;
+import com.triptogether.api.auth.dto.SignUpRequest;
 import com.triptogether.api.auth.service.AuthService;
+import com.triptogether.api.common.dto.Response;
+import com.triptogether.api.common.dto.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +38,4 @@ public class AuthController {
         Response response = authService.changePassword(request);
         return ResponseEntity.ok(response);
     }
-
-
 }
