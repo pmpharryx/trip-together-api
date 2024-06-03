@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TripTogetherApiServicesApplication {
+public class TripTogetherApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TripTogetherApiServicesApplication.class, args);
+		SpringApplication.run(TripTogetherApiApplication.class, args);
 	}
 
 }
