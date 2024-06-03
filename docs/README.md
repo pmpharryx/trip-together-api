@@ -7,7 +7,6 @@ A Spring Boot API services for the Trip Together application, facilitating group
 - [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Git Commit Convention](#git-commit-convention)
 
 ---
 
@@ -26,11 +25,5 @@ A Spring Boot API services for the Trip Together application, facilitating group
 ## Usage
 
 > **⚠️️️ Note:** This section is under construction 🚧.
-
----
-
-## Git Commit Convention
-
-> **⚠️ Note:** This section is under construction 🚧.
 
 ---
