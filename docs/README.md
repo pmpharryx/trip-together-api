@@ -17,7 +17,7 @@ A Spring Boot API services for the Trip Together application, facilitating group
 
 ## Project Structure
 
-This project has an organized project structure, let explore their information below.
+This project has an organized project structure, let explore the information below.
 
 ### Top-level Structure
 
@@ -107,6 +107,8 @@ functionalities, reducing dependencies between features and improving maintainab
 ### Application Configuration
 
 A centralized location for application properties and configurations.
+
+You can configure application-specific properties in the `src/main/resources/application.yaml` file.
 
 **Directory:** `./src/main/resources`
 
