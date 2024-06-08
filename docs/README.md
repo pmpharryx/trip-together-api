@@ -2,6 +2,8 @@
 
 A Spring Boot API services for the Trip Together application, facilitating group travel planning and coordination.
 
+## Table of Contents
+
 - [Installation Guide](#installation-guide)
   - [Prerequisites](#prerequisites)
   - [Steps to Install](#steps-to-install)
@@ -74,7 +76,8 @@ Before you begin, ensure you have the following installed on your machine:
 
 - **Maven Issues**: Ensure that your `JAVA_HOME` environment variable is set correctly.
 
-For any further assistance, please refer to the [Spring Boot Documentation](https://spring.io/projects/spring-boot) or raise an issue in the repository.
+For any further assistance, please refer to the [Spring Boot Documentation](https://spring.io/projects/spring-boot) 
+or raise an issue in the repository.
 
 ---
 
