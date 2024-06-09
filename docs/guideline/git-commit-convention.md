@@ -24,7 +24,7 @@ The commit message should be structured as follows:
 - `type`: A type of the change being made
 - `scope`: A scope that provides additional context about the change (optional but recommended for clarity)
   - Use noun that represent parts or components in the project
-  - Use a single word or a short phrase in kebab case (lowercase words separated by hyphens)
+  - Use a single word or a short phrase in lowercase and hyphen-separated
 - `subject`: A short summary of the change
   - Start with a non-capitalized verb
   - Use imperative mood in present tense
