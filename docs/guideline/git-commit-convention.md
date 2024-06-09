@@ -1,6 +1,6 @@
 # Git Commit Convention
 
-This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages.
+This project follows the [Conventional Commits](https://www.conventionalcommits.org) specification for commit messages.
 This convention helps to maintain consistent and meaningful commit history, which is beneficial for project maintenance 
 and versioning.
 
