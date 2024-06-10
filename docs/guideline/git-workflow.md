@@ -9,6 +9,7 @@ in isolating changes, facilitating parallel development, and maintaining a clean
 - [Main Branch](#main-branch)
 - [Workflow Instructions](#workflow-instructions)
 - [Branch Naming Convention](#branch-naming-convention)
+- [Git Workflow Diagram](#git-workflow-diagram)
 
 ---
 
@@ -114,5 +115,39 @@ To create a new branch, it should be structured as follows:
 - `branch-name`: A brief but descriptive name that clearly conveys the purpose or goal of the branch
   - Use lowercase and hyphen-separated
   - Should not be too long
+
+---
+
+## Git Workflow Diagram
+
+```mermaid
+%%{
+   init: {
+     'gitGraph': {
+       'mainBranchOrder': 2
+     }
+   }
+}%%
+gitGraph:
+    commit
+    commit
+    commit
+    branch feature/sign-up order: 1
+    checkout feature/sign-up
+    commit
+    commit
+    commit
+    commit
+    checkout main
+    merge feature/sign-up
+    branch fix/username-validation order: 3
+    checkout fix/username-validation
+    commit
+    commit
+    commit
+    checkout main
+    merge fix/username-validation
+    commit
+```
 
 ---
