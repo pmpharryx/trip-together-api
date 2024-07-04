@@ -1,4 +1,4 @@
-package com.triptogether.api.auth.validator;
+package com.triptogether.api.common.validator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidUsername {
 
-    String message() default "Invalid username";
+    String message() default "Username must only contains alphabet characters, numbers, and underscores between 1 - 16 characters long.";
 
     Class<?>[] groups() default {};
 

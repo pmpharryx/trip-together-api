@@ -1,4 +1,4 @@
-package com.triptogether.api.auth.validator;
+package com.triptogether.api.common.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
