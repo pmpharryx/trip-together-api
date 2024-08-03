@@ -1,11 +1,16 @@
 package com.triptogether.api.user.service;
 
+import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.common.model.User;
-import com.triptogether.api.common.dto.ResponseData;
+import com.triptogether.api.user.dto.UpdateUserProfileRequest;
+import com.triptogether.api.user.dto.UserProfileResponse;
+import com.triptogether.api.common.exception.UserNotFoundException;
 import com.triptogether.api.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,10 +20,34 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseData<User> getUserProfile(String userId) {
-        Optional<User> user = userRepository.findById(UUID.fromString(userId));
-        return ResponseData.<User>responseDataBuilder()
-                    .data(user.orElse(null))
+    public ResponseDTO<UserProfileResponse> getUserProfile(String userId) {
+        Optional<User> optionalUser = userRepository.findById(UUID.fromString(userId));
+
+        if(optionalUser.isEmpty()){
+            Map<String, String> errors = new HashMap<>();
+            errors.put("userId", "Cannot find the user with provided userId.");
+            throw new UserNotFoundException("User Not Found Exception",errors);
+        }
+        User user = optionalUser.get();
+
+        UserProfileResponse userProfile = UserProfileResponse.fromUser(user);
+
+        return ResponseDTO.<UserProfileResponse>responseBuilder()
+                    .data(userProfile)
                     .build();
+    }
+
+    public ResponseDTO<?> updateUserProfile(UpdateUserProfileRequest request){
+
+        if(request.getUsername() != null){
+            userRepository.updateUsername(request.getUserId(), request.getUsername());
+        }
+        if(request.getMobileNo() != null){
+            userRepository.updateMobileNo(request.getUserId(),request.getMobileNo());
+        }
+
+        return ResponseDTO.responseBuilder()
+                .statusMessage("Update successfully.")
+                .build();
     }
 }
