@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class AuthExceptionHandler {
 
-    @ExceptionHandler(SignUpException.class)
-    public ResponseEntity<ResponseDTO<?>> handleSignUpException(SignUpException ex){
+    @ExceptionHandler(SignUpErrorException.class)
+    public ResponseEntity<ResponseDTO<?>> handleSignUpException(SignUpErrorException ex){
         ResponseDTO<?> response =  ResponseDTO.<User>responseBuilder()
                 .statusCode(StatusCode.SIGN_UP_ERROR_1)
                 .statusMessage(ex.getMessage())
@@ -34,8 +34,8 @@ public class AuthExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(SignInException.class)
-    public ResponseEntity<ResponseDTO<?>> handleSignInException(SignInException ex){
+    @ExceptionHandler(SignInErrorException.class)
+    public ResponseEntity<ResponseDTO<?>> handleSignInException(SignInErrorException ex){
         ResponseDTO<?> response = ResponseDTO.<User>responseBuilder()
                 .statusCode("402")
                 .statusMessage(ex.getMessage())
