@@ -2,9 +2,12 @@ spring:
   application:
     name: "Trip Together API Service"
   datasource:
-    url: jdbc:postgresql://localhost:5432/trip_together
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://db:5432/trip_together
     username: postgres
     password: admin
+    initialization-mode: always
+    schema: classpath:schema.sql
   jpa:
     hibernate:
       ddl-auto: create-drop
