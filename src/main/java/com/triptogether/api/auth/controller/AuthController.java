@@ -6,10 +6,11 @@ import com.triptogether.api.auth.dto.SignInResponse;
 import com.triptogether.api.auth.dto.SignUpRequest;
 import com.triptogether.api.auth.exception.ChangePasswordErrorException;
 import com.triptogether.api.auth.service.AuthService;
+import com.triptogether.api.auth.utility.JwtUtils;
 import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.auth.exception.MissingTokenException;
-import com.triptogether.api.auth.exception.SignInException;
-import com.triptogether.api.auth.exception.SignUpException;
+import com.triptogether.api.auth.exception.SignInErrorException;
+import com.triptogether.api.auth.exception.SignUpErrorException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class AuthController {
             for (FieldError error : bindingResult.getFieldErrors()){
                 errors.put(error.getField(),error.getDefaultMessage());
             }
-            throw new SignUpException("Sign-Up Error Exception",errors);
+            throw new SignUpErrorException("Sign-Up Error Exception",errors);
         }
         ResponseDTO<?> response = authService.signUp(request);
         return ResponseEntity.ok(response);
@@ -48,7 +49,7 @@ public class AuthController {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 errors.put(error.getField(), error.getDefaultMessage());
             }
-            throw new SignInException("Sign-In Error Exception", errors);
+            throw new SignInErrorException("Sign-In Error Exception", errors);
         }
         ResponseDTO<SignInResponse> response = authService.signIn(request);
         return ResponseEntity.ok(response);
@@ -67,13 +68,17 @@ public class AuthController {
             throw new ChangePasswordErrorException("Change Password Error Exception", errors);
         }
 
-        if(authorizationHeader == null){
+        if(authorizationHeader == null || authorizationHeader.isEmpty()){
             Map<String, String> errors = new HashMap<>();
-            errors.put("authorizationHeader", "Authorization token is missing.");
+            errors.put("authorizationHeader", "Authorization header is missing.");
             throw new MissingTokenException("Missing Token Exception", errors);
         }
+
+        JwtUtils.verify();
 
         ResponseDTO<?> response = authService.changePassword(request);
         return ResponseEntity.ok(response);
     }
 }
+
+
