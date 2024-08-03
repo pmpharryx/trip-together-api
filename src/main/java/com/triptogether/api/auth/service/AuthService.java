@@ -11,6 +11,7 @@ import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.auth.exception.InvalidSignInDataException;
 import com.triptogether.api.auth.exception.SignUpDatabaseConstrainViolationException;
 import com.triptogether.api.common.model.User;
+import com.triptogether.api.common.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +60,7 @@ public class AuthService {
         if (optionalUser.isEmpty()) {
             Map<String, String> errors = new HashMap<>();
             errors.put("username", "User with provided username is not exist.");
-            throw new InvalidSignInDataException("Sign in failed", errors);
+            throw new UserNotFoundException("Sign in failed", errors);
         }
         User user = optionalUser.get();
 
@@ -90,7 +91,7 @@ public class AuthService {
         if(optionalUser.isEmpty()){
             Map<String, String> errors = new HashMap<>();
             errors.put("userId", "Cannot find the user with provided userId.");
-            throw new ChangePasswordErrorException("Changing password failed. ",errors);
+            throw new UserNotFoundException("Changing password failed. ",errors);
         }
         User user = optionalUser.get();
 
