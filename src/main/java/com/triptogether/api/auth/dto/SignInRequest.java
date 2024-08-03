@@ -1,5 +1,6 @@
 package com.triptogether.api.auth.dto;
 
+import com.triptogether.api.common.validator.ValidPassword;
 import com.triptogether.api.common.validator.ValidUsername;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ public class SignInRequest {
     private String username;
 
     @NotBlank(message = "password is mandatory")
+    @ValidPassword
     private String password;
 
 }
