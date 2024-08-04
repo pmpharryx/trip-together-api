@@ -49,8 +49,8 @@ of each commit type within a project.
 | `refactor` | Restructuring or optimizing existing code without adding new features or fixes |
 |   `perf`   | Enhancements to improve code execution speed or efficiency                     |
 |   `test`   | Adds new tests or modifies existing ones                                       |
-|  `build`   | Changes related to the build process, such as dependencies or configurations   |
-|    `ci`    | Updates or modifications to the continuous integration files or scripts        |
+|  `build`   | Changes related to build process, such as dependencies or configurations       |
+|   `ops`    | Changes related to infrastructure, deployment, and other operations            |
 |  `revert`  | Reverts a previous commit                                                      |
 |  `chore`   | Other miscellaneous tasks that don't fit into other types                      |
 
@@ -72,7 +72,7 @@ necessary.
 |   `resource`    | Changes to resource files                                        |
 |    `config`     | Changes to configuration files and settings                      |
 |     `maven`     | Changes related to Maven configuration and scripts               |
-|    `docker`     | Changes related to Docker configuration                          |
+|      `ci`       | Changes related to CI/CD pipelines and automation scripts        |
 |     `main`      | Changes to the main application file or entry point              |
 |    `common`     | Changes to shared components                                     |
 |     `auth`      | Changes to authentication related functionality                  |
@@ -135,7 +135,7 @@ Here are some example commit messages following the conventional commit specific
 - **Continuous Integration Update**
 
   ```
-  ci(docker): update build image version
+  ops(ci): update build image version
   ```
 
 - **Reverting a Commit**
