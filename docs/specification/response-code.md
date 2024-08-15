@@ -6,6 +6,7 @@ A collection of response codes and statuses for all modules in the Trip Together
 
 - [Successful Responses](#successful-responses)
 - [Client Error Responses](#client-error-responses)
+- [Server Error Responses](#server-error-responses)
 
 ---
 
@@ -58,5 +59,17 @@ This section contains response codes indicating errors caused by the client's in
 |   Code    |        Status         | Description                  |
 |:---------:|:---------------------:|:-----------------------------|
 |           |                       |                              |
+
+---
+
+## Server Error Responses
+
+This section contains response codes indicating errors that occur on the server side.
+
+### 500 Internal Server Error
+
+|   Code    |         Status          | Description                                                         |
+|:---------:|:-----------------------:|:--------------------------------------------------------------------|
+| `500-000` | `INTERNAL_SERVER_ERROR` | An unexpected error occurred on the server. Please try again later! |
 
 ---
