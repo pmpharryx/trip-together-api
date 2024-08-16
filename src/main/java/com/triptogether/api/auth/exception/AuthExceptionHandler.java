@@ -1,7 +1,7 @@
 package com.triptogether.api.auth.exception;
 
 
-import com.triptogether.api.auth.constant.StatusCode;
+import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.common.model.User;
 import org.springframework.http.HttpStatus;

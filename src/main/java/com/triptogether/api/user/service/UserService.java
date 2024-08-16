@@ -1,5 +1,6 @@
 package com.triptogether.api.user.service;
 
+import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.common.model.User;
 import com.triptogether.api.user.dto.UpdateUserProfileRequest;

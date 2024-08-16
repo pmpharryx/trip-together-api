@@ -4,6 +4,7 @@ import com.triptogether.api.auth.exception.MissingTokenException;
 import com.triptogether.api.auth.exception.SignInErrorException;
 import com.triptogether.api.auth.exception.SignUpErrorException;
 import com.triptogether.api.auth.utility.JwtUtils;
+import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.common.exception.UpdateUserProfileErrorException;
 import com.triptogether.api.user.dto.UpdateUserProfileRequest;

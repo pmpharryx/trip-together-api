@@ -7,6 +7,7 @@ import com.triptogether.api.auth.dto.SignUpRequest;
 import com.triptogether.api.auth.exception.ChangePasswordErrorException;
 import com.triptogether.api.auth.service.AuthService;
 import com.triptogether.api.auth.utility.JwtUtils;
+import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.auth.exception.MissingTokenException;
 import com.triptogether.api.auth.exception.SignInErrorException;
