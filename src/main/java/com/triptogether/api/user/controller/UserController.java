@@ -6,7 +6,7 @@ import com.triptogether.api.auth.exception.SignUpErrorException;
 import com.triptogether.api.auth.utility.JwtUtils;
 import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.dto.ResponseDTO;
-import com.triptogether.api.common.exception.UpdateUserProfileErrorException;
+import com.triptogether.api.common.exception.FailedException;
 import com.triptogether.api.user.dto.UpdateUserProfileRequest;
 import com.triptogether.api.user.dto.UserProfileResponse;
 import com.triptogether.api.user.service.UserService;
@@ -35,7 +35,7 @@ public class UserController {
         if(authorizationHeader == null || authorizationHeader.isEmpty()){
             Map<String, String> errors = new HashMap<>();
             errors.put("authorizationHeader", "Authorization header is missing.");
-            throw new MissingTokenException("Missing Token Exception", errors);
+            throw new MissingTokenException("Missing Token Exception", StatusCode.NO_ACCESS_TOKEN, errors);
         }
 
         JwtUtils.verify();
@@ -53,7 +53,7 @@ public class UserController {
         if(authorizationHeader == null || authorizationHeader.isEmpty()){
             Map<String, String> errors = new HashMap<>();
             errors.put("authorizationHeader", "Authorization header is missing.");
-            throw new MissingTokenException("Missing Token Exception", errors);
+            throw new MissingTokenException("Missing Authorization Token.", StatusCode.NO_ACCESS_TOKEN, errors);
         }
 
         JwtUtils.verify();
@@ -63,7 +63,7 @@ public class UserController {
             for (FieldError error : bindingResult.getFieldErrors()){
                 errors.put(error.getField(),error.getDefaultMessage());
             }
-            throw new UpdateUserProfileErrorException("Update User Profile Error Exception", errors);
+            throw new FailedException("Update User Profile Failed.", StatusCode.BAD_REQUEST, errors);
         }
         ResponseDTO<?> response = userService.updateUserProfile(request);
 

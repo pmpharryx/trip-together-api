@@ -4,14 +4,12 @@ import com.triptogether.api.auth.dto.ChangePasswordRequest;
 import com.triptogether.api.auth.dto.SignInRequest;
 import com.triptogether.api.auth.dto.SignInResponse;
 import com.triptogether.api.auth.dto.SignUpRequest;
-import com.triptogether.api.auth.exception.ChangePasswordErrorException;
+import com.triptogether.api.auth.exception.MissingTokenException;
 import com.triptogether.api.auth.service.AuthService;
 import com.triptogether.api.auth.utility.JwtUtils;
 import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.dto.ResponseDTO;
-import com.triptogether.api.auth.exception.MissingTokenException;
-import com.triptogether.api.auth.exception.SignInErrorException;
-import com.triptogether.api.auth.exception.SignUpErrorException;
+import com.triptogether.api.common.exception.FailedException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +34,7 @@ public class AuthController {
             for (FieldError error : bindingResult.getFieldErrors()){
                 errors.put(error.getField(),error.getDefaultMessage());
             }
-            throw new SignUpErrorException("Sign-Up Error Exception",errors);
+            throw new FailedException("Sign-Up Error Exception", StatusCode.BAD_REQUEST, errors);
         }
         ResponseDTO<?> response = authService.signUp(request);
         return ResponseEntity.ok(response);
@@ -50,7 +48,7 @@ public class AuthController {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 errors.put(error.getField(), error.getDefaultMessage());
             }
-            throw new SignInErrorException("Sign-In Error Exception", errors);
+            throw new FailedException("Sign-In Error Exception", StatusCode.BAD_REQUEST, errors);
         }
         ResponseDTO<SignInResponse> response = authService.signIn(request);
         return ResponseEntity.ok(response);
@@ -75,7 +73,7 @@ public class AuthController {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 errors.put(error.getField(), error.getDefaultMessage());
             }
-            throw new ChangePasswordErrorException("Change Password Error Exception", errors);
+            throw new FailedException("Change Password Error Exception", StatusCode.BAD_REQUEST, errors);
         }
 
         ResponseDTO<?> response = authService.changePassword(request);

@@ -12,43 +12,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class AuthExceptionHandler {
 
-    @ExceptionHandler(SignUpErrorException.class)
-    public ResponseEntity<ResponseDTO<?>> handleSignUpException(SignUpErrorException ex){
+    @ExceptionHandler(DatabaseConstrainViolationException.class)
+    public ResponseEntity<ResponseDTO<?>> handleSignUpException(DatabaseConstrainViolationException ex){
         ResponseDTO<?> response =  ResponseDTO.<User>responseBuilder()
-                .statusCode(StatusCode.SIGN_UP_ERROR_1)
-                .statusMessage(ex.getMessage())
-                .data(null)
-                .errors(ex.getErrors())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(SignUpDatabaseConstrainViolationException.class)
-    public ResponseEntity<ResponseDTO<?>> handleSignUpException(SignUpDatabaseConstrainViolationException ex){
-        ResponseDTO<?> response =  ResponseDTO.<User>responseBuilder()
-                .statusCode(StatusCode.SIGN_UP_ERROR_2)
-                .statusMessage(ex.getMessage())
-                .data(null)
-                .errors(ex.getErrors())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(SignInErrorException.class)
-    public ResponseEntity<ResponseDTO<?>> handleSignInException(SignInErrorException ex){
-        ResponseDTO<?> response = ResponseDTO.<User>responseBuilder()
-                .statusCode("402")
-                .statusMessage(ex.getMessage())
-                .data(null)
-                .errors(ex.getErrors())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(InvalidSignInDataException.class)
-    public ResponseEntity<ResponseDTO<?>> handleInvalidSignInDataException(InvalidSignInDataException ex){
-        ResponseDTO<?> response = ResponseDTO.<User>responseBuilder()
-                .statusCode("403")
+                .statusCode(ex.getStatusCode())
                 .statusMessage(ex.getMessage())
                 .data(null)
                 .errors(ex.getErrors())
@@ -59,18 +26,7 @@ public class AuthExceptionHandler {
     @ExceptionHandler(MissingTokenException.class)
     public ResponseEntity<ResponseDTO<?>> handleMissingHeaderException(MissingTokenException ex){
         ResponseDTO<?> response = ResponseDTO.responseBuilder()
-                .statusCode("404")
-                .statusMessage(ex.getMessage())
-                .data(null)
-                .errors(ex.getErrors())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ChangePasswordErrorException.class)
-    public ResponseEntity<ResponseDTO<?>> handleChangePasswordException(ChangePasswordErrorException ex){
-        ResponseDTO<?> response = ResponseDTO.responseBuilder()
-                .statusCode("405")
+                .statusCode(ex.getStatusCode())
                 .statusMessage(ex.getMessage())
                 .data(null)
                 .errors(ex.getErrors())

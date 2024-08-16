@@ -5,7 +5,7 @@ import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.common.model.User;
 import com.triptogether.api.user.dto.UpdateUserProfileRequest;
 import com.triptogether.api.user.dto.UserProfileResponse;
-import com.triptogether.api.common.exception.UserNotFoundException;
+import com.triptogether.api.common.exception.NotFoundException;
 import com.triptogether.api.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class UserService {
         if(optionalUser.isEmpty()){
             Map<String, String> errors = new HashMap<>();
             errors.put("userId", "Cannot find the user with provided userId.");
-            throw new UserNotFoundException("User Not Found Exception",errors);
+            throw new NotFoundException("User Not Found", StatusCode.NOT_FOUND, errors);
         }
         User user = optionalUser.get();
 

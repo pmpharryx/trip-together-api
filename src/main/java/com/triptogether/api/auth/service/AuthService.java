@@ -4,14 +4,14 @@ import com.triptogether.api.auth.dto.ChangePasswordRequest;
 import com.triptogether.api.auth.dto.SignInRequest;
 import com.triptogether.api.auth.dto.SignInResponse;
 import com.triptogether.api.auth.dto.SignUpRequest;
-import com.triptogether.api.auth.exception.ChangePasswordErrorException;
+import com.triptogether.api.common.constant.StatusCode;
+import com.triptogether.api.common.exception.FailedException;
 import com.triptogether.api.auth.repository.AuthRepository;
 import com.triptogether.api.auth.utility.JwtUtils;
 import com.triptogether.api.common.dto.ResponseDTO;
-import com.triptogether.api.auth.exception.InvalidSignInDataException;
-import com.triptogether.api.auth.exception.SignUpDatabaseConstrainViolationException;
+import com.triptogether.api.auth.exception.DatabaseConstrainViolationException;
 import com.triptogether.api.common.model.User;
-import com.triptogether.api.common.exception.UserNotFoundException;
+import com.triptogether.api.common.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,21 +44,27 @@ public class AuthService {
 
     public ResponseDTO<?> signUp(SignUpRequest request) {
 
-        // Pre-check for existing username
-        Optional<User> existingUserByUsername = authRepository.findByUsername(request.getUsername());
-        if(existingUserByUsername.isPresent()){
-            Map<String, String> errors = new HashMap<>();
-            errors.put("username", "Username already exists");
-            throw new SignUpDatabaseConstrainViolationException("Sign-up database constraint violation", errors);
-        }
+        try {
+            // Pre-check for existing username
+            Optional<User> existingUserByUsername = authRepository.findByUsername(request.getUsername());
+            if(existingUserByUsername.isPresent()){
+                Map<String, String> errors = new HashMap<>();
+                errors.put("username", "Username already exists");
+                throw new DatabaseConstrainViolationException("Database constrain violation",
+                                                                StatusCode.USERNAME_DUPLICATED,
+                                                                errors);
+            }
 
-            throw new SignUpDatabaseConstrainViolationException("Sign-up database constraint violation", errors);
-        }
             // Pre-check for existing email
             Optional<User> existingUserByEmail = authRepository.findByEmail(request.getEmail());
             if(existingUserByEmail.isPresent()){
                 Map<String, String> errors = new HashMap<>();
                 errors.put("email", "User with provided email address is already exists");
+                throw new DatabaseConstrainViolationException("Database constraint violation",
+                                                                StatusCode.EMAIL_DUPLICATED,
+                                                                errors);
+            }
+
             //BCrypt encode password
             String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -85,7 +91,7 @@ public class AuthService {
         if (optionalUser.isEmpty()) {
             Map<String, String> errors = new HashMap<>();
             errors.put("username", "User with provided username is not exist.");
-            throw new UserNotFoundException("Sign in failed", errors);
+            throw new NotFoundException("Sign in failed", StatusCode.BAD_REQUEST ,errors);
         }
         User user = optionalUser.get();
 
@@ -96,7 +102,7 @@ public class AuthService {
         if(!passwordIsValid){
             Map<String, String> errors = new HashMap<>();
             errors.put("password", "Invalid password.");
-            throw new InvalidSignInDataException("Sign in failed", errors);
+            throw new FailedException("Sign in failed", StatusCode.BAD_REQUEST ,errors);
         }
         String token = createToken(user.getUserId());
         SignInResponse response = new SignInResponse(token);
@@ -119,7 +125,7 @@ public class AuthService {
         if(optionalUser.isEmpty()){
             Map<String, String> errors = new HashMap<>();
             errors.put("userId", "Cannot find the user with provided userId.");
-            throw new UserNotFoundException("Changing password failed. ",errors);
+            throw new NotFoundException("Changing password failed. ", StatusCode.BAD_REQUEST ,errors);
         }
         User user = optionalUser.get();
 
@@ -130,7 +136,7 @@ public class AuthService {
         if(!oldPasswordIsValid){
             Map<String, String> errors = new HashMap<>();
             errors.put("oldPassword", "Invalid previous password.");
-            throw new ChangePasswordErrorException("Changing password failed.",errors);
+            throw new FailedException("Changing password failed.", StatusCode.BAD_REQUEST ,errors);
         }
 
         // encode new password

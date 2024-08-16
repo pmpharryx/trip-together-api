@@ -43,7 +43,7 @@ public class JwtUtils {
         if (token == null || token.isBlank()) {
             Map<String, String> errors = new HashMap<>();
             errors.put("authorizationHeader", "Missing Token Exception.");
-            throw new MissingTokenException("Authorization token is missing.", errors);
+            throw new MissingTokenException("Authorization token is missing.", StatusCode.NO_ACCESS_TOKEN, errors);
         }
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
@@ -71,7 +71,7 @@ public class JwtUtils {
         if (token == null || token.isBlank()) {
             Map<String, String> errors = new HashMap<>();
             errors.put("authorizationHeader", "Missing Token Exception.");
-            throw new MissingTokenException("Authorization token is missing.", errors);
+            throw new MissingTokenException("Authorization token is missing.", StatusCode.NO_ACCESS_TOKEN, errors);
         }
         try{
             Algorithm algorithm = Algorithm.HMAC256(SECRET);

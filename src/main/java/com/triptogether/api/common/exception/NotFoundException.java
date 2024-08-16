@@ -6,11 +6,12 @@ import java.util.Map;
 
 
 @Getter
-public class UpdateUserProfileErrorException extends RuntimeException{
+public class NotFoundException extends RuntimeException{
 
+    String statusCode;
     private final Map<String, String> errors;
 
-    public UpdateUserProfileErrorException(String message, Map<String, String> errors) {
+    public NotFoundException(String message, String statusCode ,Map<String, String> errors) {
         super(message);
         this.errors = errors;
     }
