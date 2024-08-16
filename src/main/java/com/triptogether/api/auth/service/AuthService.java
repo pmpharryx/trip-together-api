@@ -52,20 +52,30 @@ public class AuthService {
             throw new SignUpDatabaseConstrainViolationException("Sign-up database constraint violation", errors);
         }
 
-        // Pre-check for existing mobile number
-        Optional<User> existingUserByMobileNo = authRepository.findByMobileNo(request.getMobileNo());
-        if(existingUserByMobileNo.isPresent()){
-            Map<String, String> errors = new HashMap<>();
-            errors.put("mobile_no", "User with provided phone number is already exists");
             throw new SignUpDatabaseConstrainViolationException("Sign-up database constraint violation", errors);
         }
+            // Pre-check for existing email
+            Optional<User> existingUserByEmail = authRepository.findByEmail(request.getEmail());
+            if(existingUserByEmail.isPresent()){
+                Map<String, String> errors = new HashMap<>();
+                errors.put("email", "User with provided email address is already exists");
+            //BCrypt encode password
+            String encodedPassword = passwordEncoder.encode(request.getPassword());
 
-        // Save user
-        authRepository.save(new User(request.getUsername(), request.getPassword(), request.getMobileNo()));
-        return ResponseDTO.responseBuilder()
-                .statusMessage("Sign up successfully.")
-                .data(null)
-                .build();
+            // Save user
+            authRepository.save(new User(request.getUsername(), encodedPassword, request.getEmail()));
+
+            return ResponseDTO.responseBuilder()
+                    .statusMessage("Sign up successfully.")
+                    .data(null)
+                    .build();
+
+        }catch(Exception e){
+            return ResponseDTO.responseBuilder()
+                    .statusMessage("Sign up failed.")
+                    .data(null)
+                    .build();
+        }
     }
 
     public ResponseDTO<SignInResponse> signIn(SignInRequest request) {

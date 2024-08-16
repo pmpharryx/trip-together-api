@@ -8,12 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = MobileNoValidator.class)
+@Constraint(validatedBy = EmailValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidMobileNo {
+public @interface ValidEmail {
 
-    String message() default "Invalid phone number format.";
+    String message() default "Invalid email format.";
 
     Class<?>[] groups() default {};
 

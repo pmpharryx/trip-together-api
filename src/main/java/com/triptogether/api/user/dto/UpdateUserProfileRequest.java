@@ -1,7 +1,7 @@
 package com.triptogether.api.user.dto;
 
 import com.triptogether.api.common.validator.AtLeastOneOf;
-import com.triptogether.api.common.validator.ValidMobileNoIfNotNull;
+import com.triptogether.api.common.validator.ValidEmailIfNotNull;
 import com.triptogether.api.common.validator.ValidUsernameIfNotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +10,7 @@ import lombok.Getter;
 import java.util.UUID;
 
 @Getter
-@AtLeastOneOf(fields = {"username", "mobileNo"})
+@AtLeastOneOf(fields = {"username", "email"})
 public class UpdateUserProfileRequest {
 
     @NotBlank(message = "User ID is mandatory.")
@@ -20,6 +20,6 @@ public class UpdateUserProfileRequest {
     @ValidUsernameIfNotNull
     private String username;
 
-    @ValidMobileNoIfNotNull
-    private String mobileNo;
+    @ValidEmailIfNotNull
+    private String email;
 }

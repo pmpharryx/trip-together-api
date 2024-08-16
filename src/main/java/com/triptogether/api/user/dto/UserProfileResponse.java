@@ -14,7 +14,7 @@ public class UserProfileResponse {
 
     private String username;
 
-    private String mobileNo;
+    private String email;
 
     private String createdBy;
 
@@ -29,7 +29,7 @@ public class UserProfileResponse {
         UserProfileResponse userProfile = new UserProfileResponse();
         userProfile.setUserId(user.getUserId());
         userProfile.setUsername(user.getUsername());
-        userProfile.setMobileNo(user.getMobileNo());
+        userProfile.setEmail(user.getEmail());
         userProfile.setCreatedBy(user.getCreatedBy());
         userProfile.setCreatedAt(user.getCreatedAt());
         userProfile.setUpdatedBy(user.getUpdatedBy());

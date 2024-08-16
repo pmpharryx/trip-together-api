@@ -16,10 +16,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User {
 
-    public User(String username, String password, String mobileNo) {
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
-        this.mobileNo = mobileNo;
+        this.email = email;
     }
 
     @Id
@@ -32,8 +32,11 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "mobile_no", length = 15, nullable = false, unique = true)
-    private String mobileNo;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "role", nullable = false)
+    private String role = "USER";
 
     @Column(name = "created_by", nullable = false)
     private String createdBy = "System";

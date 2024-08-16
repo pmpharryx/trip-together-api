@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public interface AuthRepository extends JpaRepository<User, UUID> {
     Optional<User> findByUsername(String username);
-    Optional<User> findByMobileNo(String mobileNo);
+    Optional<User> findByEmail(String email);
 
     @Modifying
     @Transactional

@@ -43,8 +43,8 @@ public class UserService {
         if(request.getUsername() != null){
             userRepository.updateUsername(request.getUserId(), request.getUsername());
         }
-        if(request.getMobileNo() != null){
-            userRepository.updateMobileNo(request.getUserId(),request.getMobileNo());
+        if(request.getEmail() != null){
+            userRepository.updateEmail(request.getUserId(),request.getEmail());
         }
 
         return ResponseDTO.responseBuilder()
