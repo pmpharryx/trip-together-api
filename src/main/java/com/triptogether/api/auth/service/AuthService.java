@@ -13,6 +13,7 @@ import com.triptogether.api.auth.exception.SignUpDatabaseConstrainViolationExcep
 import com.triptogether.api.common.model.User;
 import com.triptogether.api.common.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,6 +27,20 @@ public class AuthService {
 
     @Autowired
     private AuthRepository authRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+
+    // method for password encoding
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
+    // method for password verifying
+    public boolean verifyPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
 
     public ResponseDTO<?> signUp(SignUpRequest request) {
 
@@ -64,8 +79,11 @@ public class AuthService {
         }
         User user = optionalUser.get();
 
+        // verify password
+        boolean passwordIsValid = verifyPassword(request.getPassword(), user.getPassword());
+
         //Check password
-        if(!user.getPassword().equals(request.getPassword())){
+        if(!passwordIsValid){
             Map<String, String> errors = new HashMap<>();
             errors.put("password", "Invalid password.");
             throw new InvalidSignInDataException("Sign in failed", errors);
@@ -95,15 +113,21 @@ public class AuthService {
         }
         User user = optionalUser.get();
 
-        // Old password does not match
-        if(!user.getPassword().equals(request.getOldPassword())){
+        // verify password
+        boolean oldPasswordIsValid = verifyPassword(request.getOldPassword(), user.getPassword());
+
+        // old password does not match
+        if(!oldPasswordIsValid){
             Map<String, String> errors = new HashMap<>();
             errors.put("oldPassword", "Invalid previous password.");
             throw new ChangePasswordErrorException("Changing password failed.",errors);
         }
 
-        // Update new password
-        authRepository.updatePassword(user.getUserId(),request.getNewPassword());
+        // encode new password
+        String encodedNewPassword = encodePassword(request.getNewPassword());
+
+        // update new password
+        authRepository.updatePassword(user.getUserId(),encodedNewPassword);
 
         return ResponseDTO.responseBuilder()
                 .statusMessage("Changing password successfully.")
