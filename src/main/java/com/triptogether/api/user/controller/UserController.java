@@ -1,9 +1,7 @@
 package com.triptogether.api.user.controller;
 
 import com.triptogether.api.auth.exception.MissingTokenException;
-import com.triptogether.api.auth.exception.SignInErrorException;
-import com.triptogether.api.auth.exception.SignUpErrorException;
-import com.triptogether.api.auth.utility.JwtUtils;
+import com.triptogether.api.auth.utility.JwtUtility;
 import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.common.exception.FailedException;
@@ -38,7 +36,7 @@ public class UserController {
             throw new MissingTokenException("Missing Token Exception", StatusCode.NO_ACCESS_TOKEN, errors);
         }
 
-        JwtUtils.verify();
+        JwtUtility.verify();
 
         ResponseDTO<UserProfileResponse> response = userService.getUserProfile(userId);
         return ResponseEntity.ok(response);
@@ -56,7 +54,7 @@ public class UserController {
             throw new MissingTokenException("Missing Authorization Token.", StatusCode.NO_ACCESS_TOKEN, errors);
         }
 
-        JwtUtils.verify();
+        JwtUtility.verify();
 
         if(bindingResult.hasErrors()){
             Map<String, String> errors = new HashMap<>();

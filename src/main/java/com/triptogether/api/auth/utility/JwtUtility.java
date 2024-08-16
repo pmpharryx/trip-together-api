@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
-public class JwtUtils {
+public class JwtUtility {
 
     private static final String SECRET = "secret_key";
 

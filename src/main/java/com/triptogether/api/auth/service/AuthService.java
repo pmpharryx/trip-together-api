@@ -7,7 +7,7 @@ import com.triptogether.api.auth.dto.SignUpRequest;
 import com.triptogether.api.common.constant.StatusCode;
 import com.triptogether.api.common.exception.FailedException;
 import com.triptogether.api.auth.repository.AuthRepository;
-import com.triptogether.api.auth.utility.JwtUtils;
+import com.triptogether.api.auth.utility.JwtUtility;
 import com.triptogether.api.common.dto.ResponseDTO;
 import com.triptogether.api.auth.exception.DatabaseConstrainViolationException;
 import com.triptogether.api.common.model.User;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static com.triptogether.api.auth.utility.JwtUtils.createToken;
-import static com.triptogether.api.auth.utility.JwtUtils.getUserId;
+import static com.triptogether.api.auth.utility.JwtUtility.createToken;
+import static com.triptogether.api.auth.utility.JwtUtility.getUserId;
 
 
 @Service
@@ -115,7 +115,7 @@ public class AuthService {
 
     public ResponseDTO<?> changePassword(ChangePasswordRequest request) {
 
-        JwtUtils.verify();
+        JwtUtility.verify();
 
         // Get user by userId inside JWT token
         // Modify this part to add Administration Role
