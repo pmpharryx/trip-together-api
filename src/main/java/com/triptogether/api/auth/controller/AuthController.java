@@ -55,10 +55,19 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<ResponseDTO<?>> changePassword(@Valid @RequestBody ChangePasswordRequest request,
-                                                         @RequestHeader(value = "Authorization", required = false)
-                                                         String authorizationHeader, BindingResult bindingResult) {
+    @PatchMapping("/change-password")
+    public ResponseEntity<ResponseDTO<?>> changePassword(@Valid @RequestHeader(value = "Authorization", required = false)
+                                                         String authorizationHeader,
+                                                         @RequestBody ChangePasswordRequest request,
+                                                         BindingResult bindingResult) {
+
+        if(authorizationHeader == null || authorizationHeader.isEmpty()){
+            Map<String, String> errors = new HashMap<>();
+            errors.put("authorizationHeader", "Authorization header is missing.");
+            throw new MissingTokenException("Missing Token Exception", StatusCode.NO_ACCESS_TOKEN, errors);
+        }
+
+            JwtUtility.verify();
 
         if(bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
@@ -67,14 +76,6 @@ public class AuthController {
             }
             throw new ChangePasswordErrorException("Change Password Error Exception", errors);
         }
-
-        if(authorizationHeader == null || authorizationHeader.isEmpty()){
-            Map<String, String> errors = new HashMap<>();
-            errors.put("authorizationHeader", "Authorization header is missing.");
-            throw new MissingTokenException("Missing Token Exception", errors);
-        }
-
-        JwtUtils.verify();
 
         ResponseDTO<?> response = authService.changePassword(request);
         return ResponseEntity.ok(response);
